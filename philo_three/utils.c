@@ -6,7 +6,7 @@
 /*   By: syudai <syudai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:23:16 by syudai            #+#    #+#             */
-/*   Updated: 2021/03/18 10:31:23 by syudai           ###   ########.fr       */
+/*   Updated: 2021/03/20 17:37:59 by syudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	done_quota(t_info *ps)
 	{
 		ps->must_eat--;
 		if (ps->must_eat == 0)
-			exit(1);
+			exit(0);
 	}
 }
 
