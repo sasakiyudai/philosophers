@@ -6,7 +6,7 @@
 /*   By: syudai <syudai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 09:59:19 by syudai            #+#    #+#             */
-/*   Updated: 2021/03/18 10:01:20 by syudai           ###   ########.fr       */
+/*   Updated: 2021/03/21 09:31:48 by syudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int		can_i_eat(t_info *ps)
 	int		phil_count;
 
 	phil_count = ps->phil_count;
-	pthread_mutex_lock(&g_mutex_fork);
+	pthread_mutex_lock(&g_mutex_forks[ps->id]);
+	pthread_mutex_lock(&g_mutex_forks[(ps->id + 1) % phil_count]);
 	if (can_i_have(ps))
 	{
 		t = what_time();
@@ -44,10 +45,12 @@ int		can_i_eat(t_info *ps)
 		if (!g_dead)
 			printf("%ld %d has taken a fork\n", what_time(), ps->id + 1);
 		g_yoyaku[(ps->id + 1) % phil_count] = -1;
-		pthread_mutex_unlock(&g_mutex_fork);
+		pthread_mutex_unlock(&g_mutex_forks[ps->id]);
+		pthread_mutex_unlock(&g_mutex_forks[(ps->id + 1) % phil_count]);
 		return (1);
 	}
-	pthread_mutex_unlock(&g_mutex_fork);
+	pthread_mutex_unlock(&g_mutex_forks[ps->id]);
+	pthread_mutex_unlock(&g_mutex_forks[(ps->id + 1) % phil_count]);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: syudai <syudai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 22:28:33 by syudai            #+#    #+#             */
-/*   Updated: 2021/03/18 10:04:14 by syudai           ###   ########.fr       */
+/*   Updated: 2021/03/21 09:29:33 by syudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ extern pthread_mutex_t	g_print;
 extern pthread_mutex_t	g_end;
 extern pthread_mutex_t	g_quota;
 extern pthread_mutex_t	g_mutex_done;
-extern pthread_mutex_t	g_mutex_fork;
+extern pthread_mutex_t	*g_mutex_forks;
 
 typedef struct			s_info
 {

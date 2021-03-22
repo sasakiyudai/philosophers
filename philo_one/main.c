@@ -6,7 +6,7 @@
 /*   By: syudai <syudai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 22:36:09 by syudai            #+#    #+#             */
-/*   Updated: 2021/03/18 10:01:15 by syudai           ###   ########.fr       */
+/*   Updated: 2021/03/21 09:29:01 by syudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ pthread_mutex_t g_print;
 pthread_mutex_t g_end;
 pthread_mutex_t g_quota;
 pthread_mutex_t g_mutex_done;
-pthread_mutex_t g_mutex_fork;
+pthread_mutex_t *g_mutex_forks;
 
 int		is_dead(t_info *ps, long eat_from)
 {

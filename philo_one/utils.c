@@ -6,7 +6,7 @@
 /*   By: syudai <syudai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 09:39:37 by syudai            #+#    #+#             */
-/*   Updated: 2021/03/18 09:54:17 by syudai           ###   ########.fr       */
+/*   Updated: 2021/03/21 09:32:28 by syudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ void	wait_destroy_and_free(int phil_count, pthread_t *threads, t_info *ps)
 	i = 0;
 	while (i < phil_count)
 		pthread_join(threads[i++], NULL);
+	i = 0;
+	while (i < phil_count)
+		pthread_mutex_destroy(&g_mutex_forks[i++]);
 	pthread_mutex_destroy(&g_print);
 	pthread_mutex_destroy(&g_end);
 	pthread_mutex_destroy(&g_quota);
 	pthread_mutex_destroy(&g_mutex_done);
-	pthread_mutex_destroy(&g_mutex_fork);
 	free(threads);
 	free(ps);
 	free(g_fork);
@@ -74,29 +76,30 @@ int		done_quota(t_info *ps)
 	return (ended);
 }
 
-int		init_ps(char **argv, int *phil_count, pthread_t **threads, t_info **ps)
+int		init_ps(char **argv, int *pc, pthread_t **threads, t_info **ps)
 {
 	int i;
 
-	*phil_count = ft_atoi(argv[1]);
-	if (!(*threads = (pthread_t *)malloc(sizeof(pthread_t) * (*phil_count))))
+	*pc = ft_atoi(argv[1]);
+	if (!(*threads = (pthread_t *)malloc(sizeof(pthread_t) * (*pc))))
 		return (-1);
-	if (!(*ps = (t_info *)malloc(sizeof(t_info) * (*phil_count))))
+	if (!(*ps = (t_info *)malloc(sizeof(t_info) * (*pc))))
 		return (-1);
-	if (!(g_fork = (int *)malloc(sizeof(int) * (*phil_count))))
+	if (!(g_yoyaku = (int *)malloc(sizeof(int) * (*pc)))
+	|| !(g_fork = (int *)malloc(sizeof(int) * (*pc))))
 		return (-1);
-	if (!(g_yoyaku = (int *)malloc(sizeof(int) * (*phil_count))))
+	if (!(g_mutex_forks = malloc(sizeof(pthread_mutex_t) * *pc)))
 		return (-1);
 	i = 0;
-	while (i < *phil_count)
+	while (i < *pc)
 	{
 		g_fork[i] = 0;
 		g_yoyaku[i++] = -1;
+		pthread_mutex_init(&g_mutex_forks[i], NULL);
 	}
 	pthread_mutex_init(&g_end, NULL);
 	pthread_mutex_init(&g_print, NULL);
 	pthread_mutex_init(&g_quota, NULL);
 	pthread_mutex_init(&g_mutex_done, NULL);
-	pthread_mutex_init(&g_mutex_fork, NULL);
 	return (0);
 }
