@@ -6,7 +6,7 @@
 /*   By: syudai <syudai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 22:12:46 by syudai            #+#    #+#             */
-/*   Updated: 2021/03/18 23:53:45 by syudai           ###   ########.fr       */
+/*   Updated: 2021/03/25 12:38:16 by syudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void	*philosopher(void *v)
 
 int		init_ps(char **argv, int *phil_count, pthread_t **threads, t_info **ps)
 {
-	*phil_count = ft_atoi(argv[1]);
+	if ((*phil_count = ft_atoi(argv[1])) < 2)
+		return (-1);
 	if (!(*threads = (pthread_t *)malloc(sizeof(pthread_t) * (*phil_count))))
 		return (-1);
 	if (!(*ps = (t_info *)malloc(sizeof(t_info) * (*phil_count))))

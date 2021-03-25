@@ -6,7 +6,7 @@
 /*   By: syudai <syudai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 09:39:37 by syudai            #+#    #+#             */
-/*   Updated: 2021/03/21 09:32:28 by syudai           ###   ########.fr       */
+/*   Updated: 2021/03/25 12:41:39 by syudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ int		init_ps(char **argv, int *pc, pthread_t **threads, t_info **ps)
 {
 	int i;
 
-	*pc = ft_atoi(argv[1]);
+	if ((*pc = ft_atoi(argv[1])) < 2)
+		return (-1);
 	if (!(*threads = (pthread_t *)malloc(sizeof(pthread_t) * (*pc))))
 		return (-1);
 	if (!(*ps = (t_info *)malloc(sizeof(t_info) * (*pc))))
